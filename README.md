@@ -1,0 +1,1 @@
+# This project will be example for extend user model of django user model
