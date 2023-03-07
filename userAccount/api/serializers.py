@@ -1,6 +1,7 @@
 from rest_framework import serializers, validators
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from dj_rest_auth.serializers import TokenSerializer
 
 
 User = get_user_model()
@@ -61,3 +62,63 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(
+        required=True,
+        validators=[validators.UniqueValidator(queryset=User.objects.all())]
+    )
+
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "profile_photo",
+            "phone_number_1",
+            "phone_number_2",
+            "address_1",
+            "address_2",
+            "town",
+            "city",
+            "post_code",
+            "country",
+            "updated_date"
+        )
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = (
+            "id",
+            "username",
+            "first_name",
+            "last_name",
+            "email",
+            "profile_photo",
+            "phone_number_1",
+            "phone_number_2",
+            "address_1",
+            "address_2",
+            "town",
+            "city",
+            "post_code",
+            "country",
+            "updated_date",
+            "is_staff",
+        )
+
+
+class CustomTokenSerializer(TokenSerializer):
+    user = UserSerializer(read_only=True)
+
+    class Meta(TokenSerializer.Meta):
+        fields = (
+            'key',
+            'user'
+        )
