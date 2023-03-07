@@ -3,6 +3,8 @@ from .serializers import RegisterSerializer, UpdateUserSerializer
 from django.contrib.auth import get_user_model
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
+from .permissions import AdminUserOrOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 
 User = get_user_model()
 
@@ -34,3 +36,4 @@ class UpdateUserView(generics.RetrieveUpdateAPIView):
 class AllUsersView(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UpdateUserSerializer
+    permission_classes = [IsAuthenticated, AdminUserOrOwnerOrReadOnly]
