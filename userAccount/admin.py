@@ -16,5 +16,12 @@ class UserUserAdmin(UserAdmin):
     # fieldsets = UserAdmin.fieldsets + ("profile_photo", "phone_number_1", "phone_number_2","address_1", "address_2", "town", "city", "post_code", "country", "updated_date")
 
 
+"""
+! bu değişiklikleri istersen core içinde urls.py da yapabilirsin --> öncelik core.urls.py dakinde 
+? admin.site.site_title = "Account App site admin" 
+? admin.site.site_header = "Account App administration"
+? admin.site.index_title = "Account App Site administration"
+"""
+
 admin.site.unregister(User)
 admin.site.register(User, UserUserAdmin)

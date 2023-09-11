@@ -31,10 +31,12 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
 )
-
+admin.site.site_title = "Account App site admin (DEV)"
+admin.site.site_header = "Account App administration"
+admin.site.index_title = "Account App Site administration"
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
+    path("account_admin/", admin.site.urls),
     path("api/account/", include('userAccount.api.urls')),
     path(r'swagger(<format>\.json|\.yaml)',
          schema_view.without_ui(cache_timeout=0), name='schema-json'),
